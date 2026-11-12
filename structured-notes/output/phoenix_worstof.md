@@ -27,9 +27,14 @@
 - Correlation, +0.10 on spot correlation: +0.184
 
 ## Backtest on real closes
-- Not run: no index history in data/. Run `python fetch_history.py`, then `python run.py` again.
+- 262 monthly launches from 2000-01-03 to 2021-10-01
+- Redeemed early: 88.9%; ended with a capital loss: 3.4%
+- Where they ended: 0.25y 55%, 0.5y 11%, 0.75y 6%, 1y 3%, 1.25y 2%, 1.5y 2%, 1.75y 0%, 2y 0%, 2.25y 2%, 2.5y 2%, 2.75y 1%, 3y 0%, 3.5y 1%, 3.75y 1%, 4y 2%, 4.25y 0%, 4.5y 0%, 4.75y 0%, 5y 11%
+- Annualised return: average +6.84%, worst -11.34%
+- Worst launch dates: 2007-06-01 (-11.3%), 2007-07-02 (-10.1%), 2007-05-02 (-9.3%), 2007-10-01 (-9.0%), 2007-11-01 (-8.8%)
 
 ![payoff](phoenix_worstof_payoff.png)
 ![spot](phoenix_worstof_spot.png)
 ![vol](phoenix_worstof_vol.png)
 ![convergence](phoenix_worstof_convergence.png)
+![backtest](phoenix_worstof_backtest.png)

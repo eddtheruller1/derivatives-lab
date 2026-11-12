@@ -26,9 +26,14 @@
 - Vega, +1 vol point on initial and long-run vol: -0.247
 
 ## Backtest on real closes
-- Not run: no index history in data/. Run `python fetch_history.py`, then `python run.py` again.
+- 262 monthly launches from 2000-01-03 to 2021-10-01
+- Redeemed early: 93.9%; ended with a capital loss: 0.0%
+- Where they ended: 0.25y 67%, 0.5y 11%, 0.75y 6%, 1y 2%, 1.25y 1%, 1.5y 1%, 1.75y 0%, 2y 1%, 2.25y 0%, 2.5y 1%, 2.75y 0%, 3y 0%, 4y 1%, 4.25y 0%, 4.5y 1%, 4.75y 0%, 5y 6%
+- Annualised return: average +6.55%, worst +5.79%
+- Worst launch dates: 2000-04-03 (+5.8%), 2000-05-02 (+5.8%), 2000-07-03 (+5.8%), 2000-08-01 (+5.8%), 2000-09-01 (+5.8%)
 
 ![payoff](phoenix_spx_payoff.png)
 ![spot](phoenix_spx_spot.png)
 ![vol](phoenix_spx_vol.png)
 ![convergence](phoenix_spx_convergence.png)
+![backtest](phoenix_spx_backtest.png)

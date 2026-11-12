@@ -14,7 +14,7 @@ plain European call and put to validate the engine.
 
 ```bash
 pip install -r requirements.txt
-python fetch_history.py      # once: daily closes of ^STOXX50E and ^GSPC from Yahoo into data/
+python fetch_history.py      # optional: data/ already holds the daily closes; this refreshes them from Yahoo
 python run.py                # offline: prices, figures and Markdown into output/
 python -m pytest -q          # 25 tests, a few seconds
 ```
@@ -48,9 +48,28 @@ All three notes lose value when volatility rises (the investor is short a put) a
 Engine check: a 1-year at-the-money call on the Euro Stoxx 50 is 6.6964 in closed form and 6.7306 by Monte Carlo
 (standard error 0.0224, 95% interval [6.6868, 6.7744]), so the closed form sits inside the interval.
 
-**Backtest: not run yet.** Yahoo Finance rate-limited every download attempt from this machine on 2026-11-12, so `data/` is empty and
-no historical result is shown. Nothing synthetic replaces it. Run `python fetch_history.py` and `python run.py` again
-to fill the backtest columns, the `*_backtest.png` charts and the history check in `results.md`.
+## Historical backtest
+
+No model here: the same note is launched on the first trading day of every month from January 2000 to October 2021
+(262 launches, each with a full five years of history after it) and followed on the realised daily closes.
+
+| note | redeemed early | ended with a capital loss | average annualised return | worst annualised return | worst launch month |
+|---|---|---|---|---|---|
+| Athena on Euro Stoxx 50 | 80.9% | 5.3% | +6.65% | −14.61% | June 2007 |
+| Phoenix memory on S&P 500 | 93.9% | 0.0% | +6.55% | +5.79% | April 2000 |
+| Phoenix memory worst-of | 88.9% | 3.4% | +6.84% | −11.34% | June 2007 |
+
+The losses all come from notes launched in 2000 or in 2007, just before the two large falls of the period. The model
+gives higher loss probabilities (12.5%, 3.7%, 11.0%) than this history (5.3%, 0.0%, 3.4%): the two are different questions,
+a risk-neutral price against one realised path of 27 years, and overlapping monthly launches are far from independent.
+
+The history also checks the model inputs: realised volatility is 22.0% on the Euro Stoxx 50 and 19.2% on the S&P 500
+(inputs 21.2% and 19.2%), and the weekly return correlation is 0.78 (input 0.75).
+
+Data: daily closes from 3 January 2000. S&P 500 to 11 November 2026 and Euro Stoxx 50 from April 2007 to 6 October 2026
+from Investing.com exports; Euro Stoxx 50 before April 2007 from the index provider's own file (stoxx.com). Over the
+2,432 days where the two Euro Stoxx 50 sources overlap, the median difference is zero and the largest is 0.38%.
+`import_history.py` builds `data/` from those files; `fetch_history.py` does the same from Yahoo when it answers.
 
 ## Figures
 
@@ -69,6 +88,8 @@ Price against volatility and against correlation for the worst-of:
 Monte Carlo convergence:
 
 ![convergence](output/athena_sx5e_convergence.png)
+![Athena backtest](output/athena_sx5e_backtest.png)
+![worst-of backtest](output/phoenix_worstof_backtest.png)
 
 Per-note one-page term sheets: [Athena](output/athena_sx5e.md), [Phoenix S&P 500](output/phoenix_spx.md), [Phoenix worst-of](output/phoenix_worstof.md).
 `NOTES.md` explains the finance behind every number.
